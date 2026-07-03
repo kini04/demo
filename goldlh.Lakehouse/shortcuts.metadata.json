@@ -1,0 +1,14 @@
+[
+  {
+    "name": "sales_silver",
+    "path": "/Tables/dbo",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/sales_silver",
+        "itemId": "c08c0262-f35f-413d-9ece-f41ca13d74f2",
+        "workspaceId": "c7c4dac4-3d34-46b9-a209-f9154c081eb3"
+      }
+    }
+  }
+]

@@ -8,12 +8,12 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "5c08ac48-62df-45e5-8567-fd9f9b8143f8",
-# META       "default_lakehouse_name": "goldlh",
-# META       "default_lakehouse_workspace_id": "2f106717-6eba-4aac-8538-c9a6f0dbb563",
+# META       "default_lakehouse": "838410f2-7d3a-43f1-a78a-4c244aa7447e",
+# META       "default_lakehouse_name": "lh2007",
+# META       "default_lakehouse_workspace_id": "8979ce71-bad5-4e61-803f-cadbb866fe13",
 # META       "known_lakehouses": [
 # META         {
-# META           "id": "5c08ac48-62df-45e5-8567-fd9f9b8143f8"
+# META           "id": "838410f2-7d3a-43f1-a78a-4c244aa7447e"
 # META         }
 # META       ]
 # META     }
@@ -24,35 +24,10 @@
 
 # Welcome to your new notebook
 # Type here in the cell editor to add code!
-# Load silver data
 from pyspark.sql.functions import *
 
-silver_df = spark.read.format("delta").load("Tables/dbo/sales_silver")
-
-# Aggregate sales by country
-gold_df = (
-    silver_df.groupBy("CustomerName")
-    .agg(
-        count("*").alias("TotalOrders"),
-        sum("UnitPrice").alias("TotalRevenue"),
-        avg("UnitPrice").alias("AvgOrderValue")
-    )
-)
-
-# Save to Gold Layer
-gold_df.write.format("delta").mode("overwrite").saveAsTable("sales_kpi_by_customer")
-
-# METADATA ********************
-
-# META {
-# META   "language": "python",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-df = spark.sql("SELECT * FROM goldlh.dbo.sales_kpi_by_customer LIMIT 1000")
-display(df)
+df = spark.read.option("header", True).csv("Files/sales.csv")
+df.write.format("delta").mode("overwrite").saveAsTable("sales_bronze")
 
 # METADATA ********************
 

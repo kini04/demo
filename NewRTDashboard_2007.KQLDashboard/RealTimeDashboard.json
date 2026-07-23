@@ -1,0 +1,199 @@
+{
+  "schema_version": 77,
+  "flavor": "RTDashboard_Regular",
+  "changeDetection": {
+    "kind": "liveUpdates",
+    "fallbackRefreshRate": "5m",
+    "minRefreshRate": "10s"
+  },
+  "tiles": [
+    {
+      "id": "30516a88-6e33-4ecb-812b-e81f8e4ad9f8",
+      "title": "Bike Details",
+      "visualType": "table",
+      "pageId": "f43481d2-5bd0-45e3-b715-af8167d98c59",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 9,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b940ae5e-ddcc-4c72-b222-f1d19b52d635"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "11e0f27b-7576-4ee9-abce-c467102095b6",
+      "title": "Total Bikes By Neighbourhood",
+      "visualType": "column",
+      "pageId": "f43481d2-5bd0-45e3-b715-af8167d98c59",
+      "layout": {
+        "x": 9,
+        "y": 0,
+        "width": 9,
+        "height": 7
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "7cead355-b789-41a5-aa41-183584dbb395"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "seriesColors": {
+          "total_bikes": "color--(1)"
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "forceAxisTicks": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    }
+  ],
+  "baseQueries": [
+    {
+      "id": "8287a0f4-57ef-4067-bb21-c04f8034c660",
+      "queryId": "732f098c-14ba-4d00-b9b5-9ec77076f31f",
+      "variableName": "base_bikes"
+    }
+  ],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "ed8f7be7-8800-4883-bc87-fa08b78a2ebd",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "string",
+      "id": "1d910f02-ff64-4aad-a377-5bc3b72b4794",
+      "displayName": "Neighbourhood",
+      "description": "",
+      "variableName": "Selected_Neighbourhood",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "query-result"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "Neighbourhood"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "2cf59569-12e8-44c6-815b-92aec30fc028"
+        }
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "f43481d2-5bd0-45e3-b715-af8167d98c59"
+        ]
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "d20c7c12-3bdf-4d1d-b2ce-550c30a6ecd7",
+      "kind": "kusto-trident",
+      "clusterUri": "",
+      "databaseArtifactId": "f2aee36c-6e8a-4538-9df3-277cdd223bef",
+      "database": "dd223bef-277c-9df3-4538-6e8af2aee36c",
+      "workspace": "00000000-0000-0000-0000-000000000000",
+      "name": "eh2007"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Page 1",
+      "id": "f43481d2-5bd0-45e3-b715-af8167d98c59"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "d20c7c12-3bdf-4d1d-b2ce-550c30a6ecd7"
+      },
+      "text": "base_bikes\r\n| project Neighbourhood, Street, No_Bikes, No_Empty_Docks",
+      "id": "b940ae5e-ddcc-4c72-b222-f1d19b52d635",
+      "usedVariables": [
+        "base_bikes"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "d20c7c12-3bdf-4d1d-b2ce-550c30a6ecd7"
+      },
+      "text": "base_bikes\r\n| where No_Bikes > 10 \r\n| summarize total_bikes= sum(No_Bikes) by Neighbourhood",
+      "id": "7cead355-b789-41a5-aa41-183584dbb395",
+      "usedVariables": [
+        "base_bikes"
+      ]
+    },
+    {
+      "id": "732f098c-14ba-4d00-b9b5-9ec77076f31f",
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "d20c7c12-3bdf-4d1d-b2ce-550c30a6ecd7"
+      },
+      "text": "bike_full\n| where (isempty( ['Selected_Neighbourhood']) or Neighbourhood in (['Selected_Neighbourhood']))",
+      "usedVariables": [
+        "Selected_Neighbourhood"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "d20c7c12-3bdf-4d1d-b2ce-550c30a6ecd7"
+      },
+      "text": "// Please enter your KQL query (Example):\nbike_full\n| project Neighbourhood\n",
+      "id": "2cf59569-12e8-44c6-815b-92aec30fc028",
+      "usedVariables": []
+    }
+  ],
+  "embeddedApps": []
+}

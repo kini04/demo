@@ -1,0 +1,22 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "a06d437d-9e6d-4a4c-bb80-2bb4865d7f04",
+        "clusterUri": "https://trd-eacbup2h6dqwdfbsnb.z8.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "f2aee36c-6e8a-4538-9df3-277cdd223bef"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "867b14a9-4828-432e-8e57-641e5cd39e82",
+        "content": "//***********************************************************************************************************\n// Here are two articles to help you get started with KQL:\n// KQL reference guide - https://aka.ms/KQLguide\n// SQL - KQL conversions - https://aka.ms/sqlcheatsheet\n//***********************************************************************************************************\n\n// Use \"take\" to view a sample number of records in the table and check the data.\n\n\n-- \nexplain\nselect * from bike;\n",
+        "title": "Tab",
+        "dataSourceId": "a06d437d-9e6d-4a4c-bb80-2bb4865d7f04"
+      }
+    ],
+    "querysetType": "Embedded"
+  }
+}

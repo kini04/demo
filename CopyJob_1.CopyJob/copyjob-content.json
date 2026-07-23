@@ -1,0 +1,150 @@
+{
+  "properties": {
+    "jobMode": "Batch",
+    "source": {
+      "type": "DelimitedText",
+      "connectionSettings": {
+        "type": "HttpServer",
+        "externalReferences": {
+          "connection": "48b6e11f-ee7d-45b1-a5c0-f92e61e89adb"
+        }
+      }
+    },
+    "destination": {
+      "type": "LakehouseTable",
+      "connectionSettings": {
+        "type": "Lakehouse",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "artifactId": "4aa7447e-4c24-a78a-43f1-7d3a838410f2",
+          "rootFolder": "Tables"
+        }
+      }
+    },
+    "policy": {
+      "timeout": "0.12:00:00",
+      "retry": 0
+    }
+  },
+  "activities": [
+    {
+      "id": "b9ee9aba-8632-4459-8afe-dbdaaacf1c0e",
+      "properties": {
+        "source": {
+          "datasetSettings": {
+            "location": {
+              "type": "HttpServerLocation"
+            },
+            "columnDelimiter": ",",
+            "rowDelimiter": "\n",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+          },
+          "storeSettings": {
+            "requestMethod": "GET"
+          },
+          "formatSettings": {}
+        },
+        "destination": {
+          "partitionOption": "None",
+          "writeBehavior": "Overwrite",
+          "datasetSettings": {
+            "schema": "dbo",
+            "table": "orders"
+          },
+          "applyVOrder": false
+        },
+        "enableStaging": false,
+        "translator": {
+          "type": "TabularTranslator",
+          "mappings": [
+            {
+              "source": {
+                "name": "SalesOrderID",
+                "type": "String",
+                "physicalType": "String"
+              },
+              "destination": {
+                "name": "SalesOrderID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "OrderDate",
+                "type": "String",
+                "physicalType": "String"
+              },
+              "destination": {
+                "name": "OrderDate",
+                "physicalType": "date"
+              }
+            },
+            {
+              "source": {
+                "name": "CustomerID",
+                "type": "String",
+                "physicalType": "String"
+              },
+              "destination": {
+                "name": "CustomerID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "LineItem",
+                "type": "String",
+                "physicalType": "String"
+              },
+              "destination": {
+                "name": "LineItem",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "ProductID",
+                "type": "String",
+                "physicalType": "String"
+              },
+              "destination": {
+                "name": "ProductID",
+                "physicalType": "string"
+              }
+            },
+            {
+              "source": {
+                "name": "OrderQty",
+                "type": "String",
+                "physicalType": "String"
+              },
+              "destination": {
+                "name": "OrderQty",
+                "physicalType": "integer"
+              }
+            },
+            {
+              "source": {
+                "name": "LineItemTotal",
+                "type": "String",
+                "physicalType": "String"
+              },
+              "destination": {
+                "name": "LineItemTotal",
+                "physicalType": "double"
+              }
+            }
+          ]
+        },
+        "typeConversionSettings": {
+          "typeConversion": {
+            "allowDataTruncation": true,
+            "treatBooleanAsNumber": false
+          }
+        }
+      }
+    }
+  ]
+}
